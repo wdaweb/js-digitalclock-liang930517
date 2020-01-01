@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Poiret+One&display=swap" rel="stylesheet">
+    <title>Document</title>
+  </head>
+
+  <style>
+    #clock1 {
+      height: 450px;
+      background: url('bg2.png');
+      background-repeat: no-repeat;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      background-size: 45%;
+      background-position-x:center;
+    }
+    .ck {
+      display: inline-flex;
+    }
+    .c1,
+    .c2,
+    .c3,
+    .c4,
+    .c5,
+    .c6,
+    .c7,
+    .c8,
+    .c9,
+    .c0 {
+      width: 100px;
+      height: 100px;
+      background: url("number.png");
+      display: inline-block;
+      margin-top: 150px;
+      filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.7));
+    }
+    .cc {
+      width: 50px;
+      height: 100px;
+      background: url("number.png");
+      background-position: 50px;
+      display: inline-block;
+      margin: 150px 10px;
+    }
+    .c1 {
+      background-position: 0px;
+    }
+    .c2 {
+      background-position: -100px;
+    }
+    .c3 {
+      background-position: -200px;
+    }
+    .c4 {
+      background-position: -300px;
+    }
+    .c5 {
+      background-position: -400px;
+    }
+    .c6 {
+      background-position: -500px;
+    }
+    .c7 {
+      background-position: -600px;
+    }
+    .c8 {
+      background-position: -700px;
+    }
+    .c9 {
+      background-position: -800px;
+    }
+    .c0 {
+      background-position: -900px;
+    }
+
+    #clock2 {
+      width: 600px;
+      height: 300px;
+      background: #555;
+      margin: 50px auto;
+      text-align: center;
+      color: white;
+      display: flex;
+      justify-content: space-around;
+      flex-flow: column nowrap;
+    }
+
+    /* div {
+      background-image: url('26119222.png');
+      background-repeat: no-repeat;
+      background-size: 30%;
+      margin-top: 50px;
+      background-position-x:center;
+      height: 500px;
+    } */
+    .d0 {
+      display: block;
+      text-align: center;
+      font-size: 50px;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    .d1 {
+      display:block;
+      text-align: center;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-family: 'Poiret One', cursive;
+      font-size: 50px;
+    }
+  </style>
+
+  <body>
+    <div id="clock1">
+      <span class="ck">
+        <span id="ck1" class="c0"></span>
+        <span id="ck2" class="c1"></span>
+      </span>
+      <span class="cc"></span>
+      <span class="ck">
+        <span id="ck3" class="c2"></span>
+        <span id="ck4" class="c3"></span>
+      </span>
+      <span class="cc"></span>
+      <span class="ck">
+        <span id="ck5" class="c4"></span>
+        <span id="ck6" class="c5"></span>
+      </span>
+    </div>
+    <p>
+
+      <div>
+      <span id="font" class="d0">距離2021年的時間還有:</span>
+      <span id="display" class="d1"></span>
+    </div>
+
+  </p>  
+
+    <script>
+      var n_day = ["SUN", "MON", "TUE", "WED", "THR", "FRI", "SAT"];
+      function chk0(num) {
+        // if(num<10) return "0"+num;
+        // else return num;
+        return num < 10 ? "0" + num : num;
+      }
+      function runtime() {
+        let nt = new Date();
+        let n_hour = nt.getHours(),
+          n_min = nt.getMinutes(),
+          n_sec = nt.getSeconds(),
+          n_year = nt.getFullYear(),
+          n_moth = nt.getMonth(),
+          n_date = nt.getDate();
+        day_item = nt.getDay();
+
+        //時分秒各單位的'個位數'   10:57:23 => 0,7,3    57/10的餘數=>7
+        let n_hx = n_hour % 10;
+        let n_mx = n_min % 10;
+        let n_sx = n_sec % 10;
+        // console.log(n_hx,n_mx,n_sx);
+
+        //時分秒各單位的'十位數'  10:57:23  => 1,5,2
+        let n_ht = Math.floor(n_hour / 10);
+        let n_mt = Math.floor(n_min / 10);
+        let n_st = Math.floor(n_sec / 10);
+
+        document.getElementById("ck1").className = "c" + n_ht;
+        document.getElementById("ck2").className = "c" + n_hx;
+        document.getElementById("ck3").className = "c" + n_mt;
+        document.getElementById("ck4").className = "c" + n_mx;
+        document.getElementById("ck5").className = "c" + n_st;
+        document.getElementById("ck6").className = "c" + n_sx;
+
+        //document.getElementsByClassName("cc")[0].style.display="none" 這寫法會跑版不適用
+        document.getElementsByClassName("cc")[0].style.opacity = 1;
+        document.getElementsByClassName("cc")[1].style.opacity = 1;
+
+        setTimeout(runtime, 1000); //1000毫秒=1秒
+
+        setTimeout(function() {
+          //500毫秒不顯現(透明度)冒號
+          document.getElementsByClassName("cc")[0].style.opacity = 0;
+          document.getElementsByClassName("cc")[1].style.opacity = 0;
+        }, 500);
+      }
+
+      runtime();
+    </script>
+
+
+
+<!------------------------------------ 倒數日 ------------------------>
+<script>
+  var timer;
+
+var today = new Date(); // 開始日期  
+var end = new Date('2021', '0', '1','0','0','0'); // 結束日期  year,month,day,hour,minutes,seconds,milliseconds
+var totalSec = Math.round((end.getTime() - today.getTime())/1000); // Second
+
+timer = setInterval("CountDown()",1000);  
+
+function CountDown(){     
+  if(totalSec >= 0)
+  {    
+    time = Init(totalSec);   
+    document.getElementById("display").innerHTML = time;     
+      if(totalSec !=0){   
+        totalSec--;     
+      }else{     
+        clearInterval(timer);
+        alert("Happy New Year!!!")
+      }     
+  }
+}  
+
+function Init(totalSec)
+{  
+  var day = parseInt(Math.floor(totalSec / 86400));  
+  var hour = day >= 0? Math.floor((totalSec - day*86400)/3600):Math.floor(totalSec/3600);   
+  var minute = hour >= 0? Math.floor((totalSec -day*86400 - hour*3600)/60):Math.floor(totalSec/60);  
+  var second = minute >= 0? Math.floor(totalSec -day*86400 - hour*3600-minute*60):totalSec;  
+  var time="";        
+  if (day > 0) time += day + " Day ";  
+  if (hour > 0) time += hour + " hur ";  
+  if (minute > 0) time += minute + " min ";  
+  time += second+" sec ";  
+  time = time;
+  return time;  
+}  
+  </script>
+  </body>
+</html>
